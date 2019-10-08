@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, Alert } from 'react-native';
+import { ScrollView, StyleSheet, View, Linking, Alert } from 'react-native';
 import { Card, Text, Button, Icon } from 'react-native-elements';
 import { CardList } from '../components/CardList';
 import { SearchList } from '../components/SearchList';
@@ -67,7 +67,7 @@ renderBottomNavigation(album)
   const {artist} = this.state;
 return(
   <View style={styles.albumMenu}>
-    <Icon onPress={() =>{}}
+    <Icon onPress={() => Linking.openURL(this.state.tracks[0].preview)}
     raised
     name='play'
     type='font-awesome'

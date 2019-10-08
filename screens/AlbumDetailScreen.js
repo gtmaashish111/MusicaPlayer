@@ -15,11 +15,11 @@ export default class AlbumDetailScreen extends React.Component {
 
       this.state = {
           tracks:[],
-          isPlaying: false,
-      currentSongIndex: undefined
+          //isPlaying: false,
+      //currentSongIndex: undefined
       }
     
-      this.currentSong = undefined;
+      //this.currentSong = undefined;
   }
 
   componentDidMount()
@@ -62,62 +62,62 @@ async saveFavoriteTrack (album, track)
         }
     }
 
-    async playSong(track, index) {
-        if ( this.currentSong &&  this.state.isPlaying ) { this.currentSong.stopAsync()  }
+    // async playSong(track, index) {
+    //     if ( this.currentSong &&  this.state.isPlaying ) { this.currentSong.stopAsync()  }
     
-        try {
-          const { sound: soundObject, status } = await Expo.Audio.Sound.create(
-             {uri: track.preview},
-             { shouldPlay: true }
-          );
-          // Your sound is playing!
-          this.currentSong = soundObject;
-          this.currentSong.playAsync();
-          this.setState({isPlaying: true, currentSongIndex: index});
-        } catch (error) {
-          // An error occurred!
-          this.setState({isPlaying: false, currentSongIndex: undefined});
-        }
-      }
+    //     try {
+    //       const { sound: soundObject, status } = await Expo.Audio.Sound.create(
+    //          {uri: track.preview},
+    //          { shouldPlay: true }
+    //       );
+    //       // Your sound is playing!
+    //       this.currentSong = soundObject;
+    //       this.currentSong.playAsync();
+    //       this.setState({isPlaying: true, currentSongIndex: index});
+    //     } catch (error) {
+    //       // An error occurred!
+    //       this.setState({isPlaying: false, currentSongIndex: undefined});
+    //     }
+    //   }
     
-      async stopSong() {
-        const { isPlaying, currentSongIndex } = this.state;
+      // async stopSong() {
+      //   const { isPlaying, currentSongIndex } = this.state;
     
-        if ( this.currentSong && isPlaying ) {
-          this.currentSong.stopAsync();
-          this.setState({currentSongIndex: undefined, isPlaying: false});
-        }
-      }
+      //   if ( this.currentSong && isPlaying ) {
+      //     this.currentSong.stopAsync();
+      //     this.setState({currentSongIndex: undefined, isPlaying: false});
+      //   }
+      // }
 
-      renderIcon(track, index) {
-        const { isPlaying, currentSongIndex } = this.state;
+      // renderIcon(track, index) {
+      //   const { isPlaying, currentSongIndex } = this.state;
     
-        debugger;
+      //   debugger;
     
-        if (currentSongIndex === index && isPlaying) {
-          return (
-            <Icon raised
-                  name='stop-circle'
-                  type='font-awesome'
-                  color='#f50'
-                  onPress={() => this.stopSong(track, index)}
-            />
-          )
-        } else {
-          return (
-            <Icon raised
-                  name='play-circle'
-                  type='font-awesome'
-                  color='#f50'
-                  onPress={() => this.playSong(track, index)}
-            />
-          )
-        }
-      }
+      //   if (currentSongIndex === index && isPlaying) {
+      //     return (
+      //       <Icon raised
+      //             name='stop-circle'
+      //             type='font-awesome'
+      //             color='#f50'
+      //             onPress={() => this.stopSong(track, index)}
+      //       />
+      //     )
+      //   } else {
+      //     return (
+      //       <Icon raised
+      //             name='play-circle'
+      //             type='font-awesome'
+      //             color='#f50'
+      //             onPress={() => this.playSong(track, index)}
+      //       />
+      //     )
+      //   }
+      // }
 renderTracks(album)
 {
 const {tracks} = this.state;
-const {isPlaying,currentSongIndex} = this.state;
+
 if(tracks && tracks.length > 0)
 {
     return tracks.map((track, index) => {
@@ -125,8 +125,14 @@ if(tracks && tracks.length > 0)
             <ListItem
             key = {index}
             title = {track.title}
-            leftIcon={this.renderIcon(track, index)}
-            //leftIconOnPress = {() => Linking.openURL(track.preview)}
+            leftIcon={
+              <Icon raised
+                name='play'
+                type='font-awesome'
+                color='#f50'
+                onPress={() => Linking.openURL(track.preview)}/>
+                }
+            
             rightIcon={
                 <Icon raised
                 name='heart'
@@ -149,7 +155,7 @@ render()
     const album = this.props.navigation.getParam('album',{});
     const artist = this.props.navigation.getParam('artist','');
 
-    const {tracks, isPlaying} = this.state;
+   // const {tracks, isPlaying} = this.state;
     if(album.id)
     {
     return(
